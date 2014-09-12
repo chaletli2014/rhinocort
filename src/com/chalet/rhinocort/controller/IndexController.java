@@ -187,7 +187,20 @@ public class IndexController extends BaseController{
         
         String directory = BrowserUtils.getDirectory(request.getHeader("User-Agent"),"report");
         String beginDateStr = DateUtils.getTheBeginDateOfRecordDateOfFormatter1(new Date());
+        
         String userLevel = "RSM";
+        
+        switch(currentUser.getLevel()){
+            case LsAttributes.USER_LEVEL_BM:
+            case LsAttributes.USER_LEVEL_RSD:
+            case LsAttributes.USER_LEVEL_RSM:
+                userLevel = "RSM";
+                break;
+            case LsAttributes.USER_LEVEL_DSM:
+            case LsAttributes.USER_LEVEL_REP:
+                userLevel = "DSM";
+                break;
+        }
         
         remoteReportFile.append(directory).append(beginDateStr).append("/")
         .append("weeklyReport-")
