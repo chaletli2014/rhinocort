@@ -86,4 +86,33 @@ public class UserServiceImpl implements UserService {
             logger.info("the size of the list hosUsers is 0, no need to insert the data");
         }
     }
+    
+    @Override
+    public void deleteBMUsers() throws Exception {
+        userDAO.deleteBMUsers();
+    }
+
+    @Override
+    public void insertBMUsers(List<UserInfo> userInfos) throws Exception {
+        for( UserInfo user : userInfos ){
+            UserInfo dbuser = null;
+            try{
+                dbuser = userDAO.getUserInfoByTel(user.getTelephone());
+            }catch(EmptyResultDataAccessException erd){
+                logger.info("there is no user found.");
+            } catch(Exception e){
+                logger.error(String.format("fail to get the web user info by telephone - %s", user.getTelephone()),e);
+            }
+            if( null == dbuser || "".equalsIgnoreCase(dbuser.getTelephone())){
+                try{
+                    userDAO.insert(user);
+                }catch(Exception e){
+                    logger.error("fail to insert the user info,",e);
+                    throw new Exception("更新用户信息失败，请确保数据格式及内容正确");
+                }
+            }else{
+                logger.info(String.format("the user is existing in DB whose telephone is %s, so no need to insert again.", user.getTelephone()));
+            }
+        }
+    }
 }

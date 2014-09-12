@@ -20,11 +20,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chalet.rhinocort.model.UserInfo;
 import com.chalet.rhinocort.model.WebUserInfo;
 import com.chalet.rhinocort.service.HospitalService;
 import com.chalet.rhinocort.service.RhinocortService;
 import com.chalet.rhinocort.service.UserService;
 import com.chalet.rhinocort.utils.ExcelUtils;
+import com.chalet.rhinocort.utils.LsAttributes;
 import com.chalet.rhinocort.utils.RhinocortAttributes;
 
 /**
@@ -156,6 +158,37 @@ public class UploadController {
             request.getSession().setAttribute(RhinocortAttributes.UPLOAD_FILE_MESSAGE, (null==e.getMessage()||"".equalsIgnoreCase(e.getMessage()))?RhinocortAttributes.RETURNED_MESSAGE_1:e.getMessage());
         }
         request.getSession().setAttribute(RhinocortAttributes.MESSAGE_AREA_ID, "uploadAllResult_div");
+        return "redirect:showUploadData";
+    }
+    
+    @RequestMapping("/doUploadBMUserData")
+    public String doUploadBMUserData(HttpServletRequest request){
+        try{
+            List<String> headers = new ArrayList<String>();
+            headers.add("User Code");
+            headers.add("Name");
+            headers.add("Type");
+            headers.add("Tel");
+            headers.add("E-mail");
+            
+            long begin = System.currentTimeMillis();
+            List<UserInfo> users = ExcelUtils.getBMUserInfosFromFile(loadFile(request), headers);
+            long end = System.currentTimeMillis();
+            logger.info(String.format("user size is %s, spend time %s ms", users==null?0:users.size(),(end - begin)));
+            
+            logger.info("delete the old BM users first");
+            userService.deleteBMUsers();
+            
+            logger.info("begin to insert the new BM users");
+            userService.insertBMUsers(users);
+            long finish = System.currentTimeMillis();
+            logger.info("time spent to insert into DB is " + (finish-end) + " ms");
+            request.getSession().setAttribute(LsAttributes.UPLOAD_FILE_MESSAGE, LsAttributes.RETURNED_MESSAGE_0);
+        }catch(Exception e){
+            logger.error("fail to upload the file,",e);
+            request.getSession().setAttribute(LsAttributes.UPLOAD_FILE_MESSAGE, (null==e.getMessage()||"".equalsIgnoreCase(e.getMessage()))?LsAttributes.RETURNED_MESSAGE_1:e.getMessage());
+        }
+        request.getSession().setAttribute(LsAttributes.MESSAGE_AREA_ID, "uploadBMUserResult_div");
         return "redirect:showUploadData";
     }
     

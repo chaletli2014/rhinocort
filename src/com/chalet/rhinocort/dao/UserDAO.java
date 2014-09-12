@@ -25,4 +25,6 @@ public interface UserDAO {
 	
 	public void deleteHosUsers() throws Exception;
 	public void insertHosUsers(List<HospitalUserRefer> hosUsers) throws Exception;
+	
+    public void deleteBMUsers() throws Exception;
 }

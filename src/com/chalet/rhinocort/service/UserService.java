@@ -24,4 +24,7 @@ public interface UserService {
 	
 	public void deleteHosUsers() throws Exception;
 	public void insertHosUsers(List<HospitalUserRefer> hosUsers) throws Exception;
+	
+	public void deleteBMUsers() throws Exception;
+	public void insertBMUsers(List<UserInfo> userInfos) throws Exception;   
 }

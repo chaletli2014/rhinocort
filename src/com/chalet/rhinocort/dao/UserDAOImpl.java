@@ -141,4 +141,10 @@ public class UserDAOImpl implements UserDAO {
             }
         });
     }
+    
+    
+    @Override
+    public void deleteBMUsers() throws Exception {
+        dataBean.getJdbcTemplate().update("delete from tbl_userinfo where level not in('RSD','RSM','DSM','REP')");
+    }
 }

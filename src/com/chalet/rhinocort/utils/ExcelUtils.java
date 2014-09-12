@@ -278,6 +278,97 @@ public class ExcelUtils {
         
         return allInfos;
     }
+    
+    public static List<UserInfo> getBMUserInfosFromFile(String filePath,List<String> headers) throws Exception{
+        List<UserInfo> userInfos = new ArrayList<UserInfo>();
+        FileInputStream is = null;
+        try{
+            is = new FileInputStream(filePath);
+            Workbook book = createCommonWorkbook(is);
+            Sheet sheet = book.getSheetAt(0);
+            
+            int header_count = 0;
+            Map<String, Integer> headerColumn = new HashMap<String, Integer>();
+            
+            Row row = sheet.getRow(sheet.getFirstRowNum());
+            for( int i = row.getFirstCellNum(); i < row.getPhysicalNumberOfCells(); i++ ){
+                if( headers.contains(row.getCell(i).toString()) ){
+                    logger.info(String.format("row.getCell(i).toString() is %s, i is %s", row.getCell(i).toString(),i));
+                    headerColumn.put(row.getCell(i).toString(), i);
+                    header_count++;
+                }
+            }
+            logger.info("header_count is " + header_count);
+            if( header_count != headers.size() ){
+                throw new Exception("文件格式不正确，无法导入数据");
+            }
+            //get the data
+            logger.info(String.format("sheet.getPhysicalNumberOfRows() is %s", sheet.getPhysicalNumberOfRows()));
+            for( int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++ ){
+                row = sheet.getRow(i);
+                logger.info(String.format("read the row from BM excel %s",i));
+                
+                String userCode = "";
+                String name = "";
+                String type = "";
+                String tel = "";
+                String email = "";
+                try{
+                    Cell userCodeCell = row.getCell(headerColumn.get(headers.get(0)));
+                    Cell nameCell = row.getCell(headerColumn.get(headers.get(1)));
+                    Cell typeCell = row.getCell(headerColumn.get(headers.get(2)));
+                    Cell telCell = row.getCell(headerColumn.get(headers.get(3)));
+                    Cell emailCell = row.getCell(headerColumn.get(headers.get(4)));
+                    if( userCodeCell == null && nameCell == null
+                            && typeCell == null
+                            && telCell == null
+                            && emailCell == null ){
+                        logger.info("there is no new info, break now");
+                        break;
+                    }
+                    
+                    userCodeCell.setCellType(Cell.CELL_TYPE_STRING);
+                    if( null != userCodeCell ){
+                        userCode = userCodeCell.toString();
+                    }
+                    logger.info(String.format("insert BM user whose code is %s",userCode));
+                    
+                    name = nameCell.toString();
+                    
+                    type = typeCell.toString();
+                    
+                    telCell.setCellType(Cell.CELL_TYPE_STRING);
+                    tel = telCell.toString();
+                    
+                    if( null != emailCell ){
+                        email = emailCell.toString();
+                    }
+                }catch(Exception e){
+                    logger.error("fail to get the user from the excel,",e);
+                }
+                
+                if( null != tel && !"".equalsIgnoreCase(tel) ){
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.setUserCode(userCode);
+                    userInfo.setName(name);
+                    userInfo.setLevel(type);
+                    userInfo.setTelephone(tel);
+                    userInfo.setEmail(email);
+                    userInfos.add(userInfo);
+                }
+            }
+            
+        }catch(Exception e){
+            logger.error("fail to get users from the excel file.",e);
+            throw new Exception(e.getMessage());
+        }finally{
+            if(null!= is){
+                is.close();
+            }
+        }
+        
+        return userInfos;
+    }
 
     public static Workbook createCommonWorkbook(InputStream inp) throws IOException, InvalidFormatException { 
         if (!inp.markSupported()) {

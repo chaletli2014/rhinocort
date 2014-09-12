@@ -14,6 +14,14 @@
 		loading();
 		$("#uploadAllDataForm").submit();
 	}
+	function uploadBMUserData() {
+        if( $("#bMData") && $("#bMData").val() == '' ){
+            alert('请选择一个文件进行上传');
+            return false;
+        }
+        loading();
+        $("#uploadBMUserData").submit();
+    }
 	function downloadDailyData(){
 		if( $("#datepicker") && $("#datepicker").val() == '' || 
 				$("#datepicker_end") && $("#datepicker_end").val() == '' ){
@@ -92,6 +100,22 @@
 					</form>
 				</div>
 			</div>
+			<div class="element_block">
+                <div>上传数据--BU Head</div>
+                <div>
+                    <form id="uploadBMUserData" action="doUploadBMUserData" method="post" enctype="multipart/form-data" data-ajax="false" accept-charset="UTF-8">
+                        <input type="file" name="bMData" id="bMData" /> 
+                        <img alt="" src="<%=basePath%>images/button_submit.png" style="cursor: pointer; vertical-align: middle;" onclick="uploadBMUserData()" />
+                        <div id="uploadBMUserResult_div" class="uploadDataResult_div" style="display: none;">
+                            <c:if test="${message != null && message != ''}">
+                                <div>
+                                    <div>${message}</div>
+                                </div>
+                            </c:if>
+                        </div>
+                    </form>
+                </div>
+            </div>
 		</div>
 	</div>
 </body>
