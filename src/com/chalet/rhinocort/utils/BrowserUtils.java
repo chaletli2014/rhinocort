@@ -34,4 +34,13 @@ public class BrowserUtils {
         }
         return isMoblie;
     }
+	
+	public static String getDirectory(String requestHeader, String mobileDirectory){
+        if( !isMoblie(requestHeader) ){
+//            return new StringBuffer(mobileDirectory).append("ForWeb/").toString();
+            return new StringBuffer(mobileDirectory).append("/").toString();
+        }else{
+            return new StringBuffer(mobileDirectory).append("/").toString();
+        }
+    }
 }

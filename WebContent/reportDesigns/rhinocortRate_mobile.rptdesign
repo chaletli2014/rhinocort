@@ -393,7 +393,7 @@
             <list-property name="columnHints"/>
             <list-property name="filter">
                 <structure>
-                    <property name="operator">le</property>
+                    <property name="operator">lt</property>
                     <expression name="expr" type="javascript">row["rhinocortRate"]</expression>
                     <simple-property-list name="value1">
                         <value>0</value>
@@ -565,14 +565,14 @@
             <list-property name="columnHints"/>
             <list-property name="filter">
                 <structure>
-                    <property name="operator">le</property>
+                    <property name="operator">lt</property>
                     <expression name="expr" type="javascript">row["rhinocortRate"]</expression>
                     <simple-property-list name="value1">
                         <value>0</value>
                     </simple-property-list>
                 </structure>
                 <structure>
-                    <property name="operator">le</property>
+                    <property name="operator">lt</property>
                     <expression name="expr" type="javascript">row["rhiPRRate"]</expression>
                     <simple-property-list name="value1">
                         <value>0</value>
@@ -744,7 +744,7 @@
                     </simple-property-list>
                 </structure>
                 <structure>
-                    <property name="operator">le</property>
+                    <property name="operator">lt</property>
                     <expression name="expr" type="javascript">row["rhiPRRate"]</expression>
                     <simple-property-list name="value1">
                         <value>0</value>
@@ -2484,6 +2484,9 @@
       <Visible>false</Visible>
     </Outline>
     <Visible>true</Visible>
+    <Cursor>
+      <Type>Auto</Type>
+    </Cursor>
   </Block>
   <Dimension>Two_Dimensional</Dimension>
   <Units>Points</Units>
@@ -2504,8 +2507,9 @@
   <Interactivity/>
   <EmptyMessage>
     <Caption>
-      <Value>This chart contains no data.</Value>
+      <Value>该象限无数据</Value>
       <Font>
+        <Name>Microsoft YaHei UI</Name>
         <Alignment>
           <horizontalAlignment>Center</horizontalAlignment>
           <verticalAlignment>Center</verticalAlignment>
@@ -2533,7 +2537,7 @@
       <Bottom>10.0</Bottom>
       <Right>10.0</Right>
     </Insets>
-    <Visible>false</Visible>
+    <Visible>true</Visible>
   </EmptyMessage>
   <Axes>
     <Type>Linear</Type>
@@ -3763,8 +3767,9 @@
   <Interactivity/>
   <EmptyMessage>
     <Caption>
-      <Value>This chart contains no data.</Value>
+      <Value>该象限无数据</Value>
       <Font>
+        <Name>Microsoft YaHei UI</Name>
         <Alignment>
           <horizontalAlignment>Center</horizontalAlignment>
           <verticalAlignment>Center</verticalAlignment>
@@ -3792,7 +3797,7 @@
       <Bottom>10.0</Bottom>
       <Right>10.0</Right>
     </Insets>
-    <Visible>false</Visible>
+    <Visible>true</Visible>
   </EmptyMessage>
   <Axes>
     <Type>Linear</Type>
@@ -5023,8 +5028,9 @@
   <Interactivity/>
   <EmptyMessage>
     <Caption>
-      <Value>This chart contains no data.</Value>
+      <Value>该象限无数据</Value>
       <Font>
+        <Name>Microsoft YaHei UI</Name>
         <Alignment>
           <horizontalAlignment>Center</horizontalAlignment>
           <verticalAlignment>Center</verticalAlignment>
@@ -5052,7 +5058,7 @@
       <Bottom>10.0</Bottom>
       <Right>10.0</Right>
     </Insets>
-    <Visible>false</Visible>
+    <Visible>true</Visible>
   </EmptyMessage>
   <Axes>
     <Type>Linear</Type>
@@ -6282,8 +6288,9 @@
   <Interactivity/>
   <EmptyMessage>
     <Caption>
-      <Value>This chart contains no data.</Value>
+      <Value>该象限无数据</Value>
       <Font>
+        <Name>Microsoft YaHei UI</Name>
         <Alignment>
           <horizontalAlignment>Center</horizontalAlignment>
           <verticalAlignment>Center</verticalAlignment>
@@ -6311,7 +6318,7 @@
       <Bottom>10.0</Bottom>
       <Right>10.0</Right>
     </Insets>
-    <Visible>false</Visible>
+    <Visible>true</Visible>
   </EmptyMessage>
   <Axes>
     <Type>Linear</Type>

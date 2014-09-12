@@ -1,5 +1,6 @@
 package com.chalet.rhinocort.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,7 +25,9 @@ import com.chalet.rhinocort.model.UserInfo;
 import com.chalet.rhinocort.service.HospitalService;
 import com.chalet.rhinocort.service.RhinocortService;
 import com.chalet.rhinocort.service.UserService;
+import com.chalet.rhinocort.utils.BrowserUtils;
 import com.chalet.rhinocort.utils.DateUtils;
+import com.chalet.rhinocort.utils.LsAttributes;
 import com.chalet.rhinocort.utils.RhinocortAttributes;
 import com.chalet.rhinocort.utils.StringUtils;
 
@@ -160,6 +163,8 @@ public class IndexController extends BaseController{
         logger.info("weeklyReport");
         ModelAndView view = new ModelAndView();
         verifyCurrentUser(request,view);
+        UserInfo currentUser = (UserInfo)request.getSession().getAttribute(LsAttributes.CURRENT_OPERATOR_OBJECT);
+        
         List<RhinocortWeeklyData> weeklyData = new ArrayList<RhinocortWeeklyData>();
         
         try{
@@ -174,6 +179,33 @@ public class IndexController extends BaseController{
         
         view.addObject("title", title);
         view.addObject("weeklyData", weeklyData);
+        
+        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+        String localPath = request.getRealPath("/");
+        StringBuffer localReportFile = new StringBuffer(localPath);
+        StringBuffer remoteReportFile = new StringBuffer(basePath);
+        
+        String directory = BrowserUtils.getDirectory(request.getHeader("User-Agent"),"report");
+        String beginDateStr = DateUtils.getTheBeginDateOfRecordDateOfFormatter1(new Date());
+        String userLevel = "RSM";
+        
+        remoteReportFile.append(directory).append(beginDateStr).append("/")
+        .append("weeklyReport-")
+        .append(userLevel)
+        .append(".html");
+        
+        localReportFile.append(directory).append(beginDateStr).append("/")
+        .append("weeklyReport-")
+        .append(userLevel)
+        .append(".html");
+        
+        File reportfile = new File(localReportFile.toString());
+        if( reportfile.exists() ){
+            view.addObject("reportFile", remoteReportFile.toString());
+        }else{
+            view.addObject("reportFile", basePath+"jsp/weeklyReport_404.html");
+        }
+        
     	view.setViewName("weeklyReport");
         return view;
     }

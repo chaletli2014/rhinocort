@@ -45,6 +45,7 @@ public class ReportThread extends Thread {
             //daily report start
             try {
                 Date beginDate = DateUtils.getTheBeginDateOfRecordDate(now);
+                String beginDateStr = DateUtils.getTheBeginDateOfRecordDateOfFormatter1(now);
                 //0-Sunday
                 int dayInWeek = now.getDay();
                 int hour = now.getHours();
@@ -54,11 +55,9 @@ public class ReportThread extends Thread {
                         || isRestart ){
                     logger.info("console : now is " + hour + ", begin to generate report");
                     
-                    checkAndCreateFileFolder(basePath + "report/"+beginDate);
+                    checkAndCreateFileFolder(basePath + "report/"+beginDateStr);
                     
                     BirtReportUtils html = new BirtReportUtils();
-                    int email_send_flag = Integer.parseInt(CustomizedProperty.getContextProperty("email_send_flag", "0"));
-                    
                     
                     if( dayInWeek == Integer.parseInt(CustomizedProperty.getContextProperty("weekly_report_day", "1")) ){
                         logger.info("today is Monday, start to generate the html weekly report");
@@ -67,6 +66,13 @@ public class ReportThread extends Thread {
                         html.startHtmlPlatform();
                         ReportUtils.refreshWeeklyPDFReport(basePath, contextPath, beginDate);
                         this.taskTime = System.currentTimeMillis();
+                        
+                        createHTMLWeeklyReport(html, "RSM", basePath, contextPath, beginDateStr);
+                        this.taskTime = System.currentTimeMillis();
+                        
+                        createHTMLWeeklyReport(html, "DSM", basePath, contextPath, beginDateStr);
+                        this.taskTime = System.currentTimeMillis();
+                        
                         html.stopPlatform();
                         logger.info("end to generate the weekly report");
                     }
@@ -82,6 +88,25 @@ public class ReportThread extends Thread {
             }  finally{
                 isRestart = false;
             }
+        }
+    }
+    
+    private void createHTMLWeeklyReport(BirtReportUtils html, String userLevel, String basePath, String contextPath, String beginDate){
+        String weeklyReportFileName = basePath + "report/"+beginDate+"/weeklyReport-"+userLevel+".html";
+        switch(userLevel){
+            case LsAttributes.USER_LEVEL_RSM:
+                if( !new File(weeklyReportFileName).exists() ){
+                    html.runReport( basePath + "reportDesigns/rhinocortRate_mobile.rptdesign",weeklyReportFileName,"html",basePath+"/reportImages",contextPath+"/reportImages");
+                    logger.info("the weekly html report to RSM is done.");
+                }else{
+                    logger.info("The weekly html report for RSM is already generated, no need to do again.");
+                }
+                break;
+            case LsAttributes.USER_LEVEL_DSM:
+                break;
+            default:
+                logger.info(String.format("the level of the user is %s, no need to generate the report", userLevel));
+                break;
         }
     }
     

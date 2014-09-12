@@ -36,6 +36,16 @@
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>ReportListener</servlet-name>  
+        <servlet-class>com.chalet.rhinocort.utils.ReportServlet</servlet-class>  
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportListener</servlet-name>    
+        <url-pattern>/reportTimer</url-pattern>     
+    </servlet-mapping>
+    
     <filter> 
         <filter-name>characterEncodingFilter</filter-name> 
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 

@@ -19,6 +19,10 @@ public class DateUtils {
         return beginDate;
     }
 	
+	public static String getTheBeginDateOfRecordDateOfFormatter1(Date recordDate){
+	    return formatter_1.format(getTheBeginDateOfRecordDate(recordDate));
+	}
+	
 	public static Date getTheEndDateOfRecordDate(Date recordDate){
 		return new Date(getTheBeginDateOfRecordDate(recordDate).getTime() + 6 * 24 * 60 * 60 * 1000);
 	}
@@ -44,6 +48,12 @@ public class DateUtils {
 	public static String getLastEndDateOfFormatter1(Date recordDate){
 	    Date lastBeginDate = getLastBeginDateOfRecordDate(recordDate);
 	    Date lastEndDate = new Date(lastBeginDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+	    return formatter_1.format(lastEndDate);
+	}
+	
+	public static String getLastEndDate4Report(Date recordDate){
+	    Date lastBeginDate = getLastBeginDateOfRecordDate(recordDate);
+	    Date lastEndDate = new Date(lastBeginDate.getTime() + 7 * 24 * 60 * 60 * 1000);
 	    return formatter_1.format(lastEndDate);
 	}
 }

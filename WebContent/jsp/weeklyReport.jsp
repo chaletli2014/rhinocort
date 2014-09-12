@@ -35,6 +35,7 @@
                 </table>
             </div>
         </div>
+        <iframe src="${reportFile}" class="weeklyReport_iframe"></iframe>
         <jsp:include page="page_footer.jsp">
             <jsp:param value="<%=basePath%>" name="basePath"/>
             <jsp:param value="index" name="backURL"/>

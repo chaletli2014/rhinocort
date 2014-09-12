@@ -28,6 +28,8 @@ import org.eclipse.birt.report.engine.api.IRunAndRenderTask;
 import org.eclipse.birt.report.engine.api.IScalarParameterDefn;
 import org.eclipse.birt.report.engine.api.PDFRenderOption;
 
+import com.chalet.rhinocort.utils.CustomizedProperty;
+
 public class BirtReportUtils {
 
     private IReportEngine engine = null;
@@ -37,34 +39,32 @@ public class BirtReportUtils {
     public BirtReportUtils(){
         
     }
-    public void runReport(String designPath, String telephone, String userCode,String hospitalCode, String reportFileName, String fileType, String reportImgPath, String baseImgPath){
+    public void runReport(String designPath, String reportFileName, String fileType, String reportImgPath, String baseImgPath){
         try{
         	logger.info(String.format("run the birt report, the file name is %s",reportFileName));
             IReportRunnable design = null;  
             HashMap parameterMap = new HashMap();
             //Open the report design  
             design = engine.openReportDesign(designPath);  
-            
-            
             IGetParameterDefinitionTask paramTask = engine.createGetParameterDefinitionTask(design);
             Collection parameters = paramTask.getParameterDefns(false);
             
-            if( null != telephone && !"".equalsIgnoreCase(telephone) ){
+            Date now = new Date();
+            String startDate = DateUtils.getLastBeginDateOfFormatter1(now);
+            String endDate = DateUtils.getLastEndDate4Report(now);
+            
+            if( null != startDate ){
+                logger.info(String.format("populdate the param startDate %s", startDate));
                 Map paramValues = new HashMap();
-                paramValues.put("userTel", telephone);
+                paramValues.put("startDate", startDate);
                 evaluateParameterValues(parameterMap,parameters,paramValues);
             }
             
-            if( null != userCode && !"".equalsIgnoreCase(userCode) ){
+            if( null != endDate ){
+                logger.info(String.format("populdate the param endDate %s", endDate));
                 Map paramValues = new HashMap();
-                paramValues.put("userCode", userCode);
+                paramValues.put("endDate", endDate);
                 evaluateParameterValues(parameterMap,parameters,paramValues);
-            }
-            
-            if( null != hospitalCode && !"".equalsIgnoreCase(hospitalCode) ){
-            	Map paramValues = new HashMap();
-            	paramValues.put("hospitalCode", hospitalCode);
-            	evaluateParameterValues(parameterMap,parameters,paramValues);
             }
             
             IRunAndRenderTask task = engine.createRunAndRenderTask(design);  
@@ -77,8 +77,8 @@ public class BirtReportUtils {
             	options.setOption(IExcelRenderOption.OFFICE_VERSION, "office2007");
             }else if( "html".equalsIgnoreCase(fileType) ){
             	HTMLRenderContext renderContext = new HTMLRenderContext();
-                renderContext.setImageDirectory("d:/");
-                renderContext.setBaseImageURL("d:/");
+                renderContext.setImageDirectory(reportImgPath);
+                renderContext.setBaseImageURL(baseImgPath);
                 HashMap contextMap = new HashMap();
                 contextMap.put(EngineConstants.APPCONTEXT_HTML_RENDER_CONTEXT, renderContext);
                 task.setAppContext(contextMap);
@@ -95,11 +95,7 @@ public class BirtReportUtils {
             }
             
             task.setRenderOption(options);
-            if( ( null != telephone && !"".equalsIgnoreCase(telephone) ) 
-                    || (null != userCode && !"".equalsIgnoreCase(userCode)) 
-                    || (null != hospitalCode && !"".equalsIgnoreCase(hospitalCode))){
-                task.setParameterValues(parameterMap);
-            }
+            task.setParameterValues(parameterMap);
             logger.info("start to run the task");
             task.run();
             task.close();  
@@ -181,7 +177,7 @@ public class BirtReportUtils {
         try{
             config = new EngineConfig( );  
             config.setBIRTHome("");//
-            config.setLogConfig("d:/chalet/birt/logs", Level.FINE);
+            config.setLogConfig(CustomizedProperty.getContextProperty("birt_log_path", "d:/chalet/birt/logs"), Level.FINE);
             Platform.startup( config );  
             IReportEngineFactory factory = (IReportEngineFactory) Platform.createFactoryObject( IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY );  
             engine = factory.createReportEngine( config );  
@@ -194,7 +190,7 @@ public class BirtReportUtils {
     	try{
     		config = new EngineConfig( );  
     		config.setBIRTHome("");//
-    		config.setLogConfig("d:/chalet/birt/logs", Level.FINE);
+    		config.setLogConfig(CustomizedProperty.getContextProperty("birt_log_path", "d:/chalet/birt/logs"), Level.FINE);
     		HTMLEmitterConfig emitterConfig = new HTMLEmitterConfig( ); 
     		emitterConfig.setActionHandler( new HTMLActionHandler( ) ); 
     		HTMLServerImageHandler imageHandler = new HTMLServerImageHandler( ); 
@@ -248,7 +244,7 @@ public class BirtReportUtils {
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate2.rptdesign","","","d:\\rhinocortRate2.pdf","pdf","","","");  
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate3.rptdesign","","","d:\\rhinocortRate3.pdf","pdf","","","");  
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate4.rptdesign","","","d:\\rhinocortRate4.pdf","pdf","","","");  
-        html.runReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\mobile_rhinocortRate.rptdesign","","","","d:\\rhinocortRate_mobile.html","html","","");  
+        html.runReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\mobile_rhinocortRate.rptdesign","d:\\rhinocortRate_mobile.html","html","","");  
         html.stopPlatform();
         System.out.println("Finished");  
     }
