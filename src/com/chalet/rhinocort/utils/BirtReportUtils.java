@@ -39,7 +39,7 @@ public class BirtReportUtils {
     public BirtReportUtils(){
         
     }
-    public void runReport(String designPath, String reportFileName, String fileType, String reportImgPath, String baseImgPath){
+    public void runReport(String designPath, String reportFileName, String fileType, String reportImgPath, String baseImgPath, String rsmRegion){
         try{
         	logger.info(String.format("run the birt report, the file name is %s",reportFileName));
             IReportRunnable design = null;  
@@ -65,6 +65,13 @@ public class BirtReportUtils {
                 Map paramValues = new HashMap();
                 paramValues.put("endDate", endDate);
                 evaluateParameterValues(parameterMap,parameters,paramValues);
+            }
+            
+            if( null != rsmRegion ){
+            	logger.info(String.format("populdate the param rsmRegion %s", rsmRegion));
+            	Map paramValues = new HashMap();
+            	paramValues.put("rsmRegion", rsmRegion);
+            	evaluateParameterValues(parameterMap,parameters,paramValues);
             }
             
             IRunAndRenderTask task = engine.createRunAndRenderTask(design);  
@@ -244,7 +251,7 @@ public class BirtReportUtils {
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate2.rptdesign","","","d:\\rhinocortRate2.pdf","pdf","","","");  
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate3.rptdesign","","","d:\\rhinocortRate3.pdf","pdf","","","");  
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate4.rptdesign","","","d:\\rhinocortRate4.pdf","pdf","","","");  
-        html.runReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\mobile_rhinocortRate.rptdesign","d:\\rhinocortRate_mobile.html","html","","");  
+//        html.runReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\mobile_rhinocortRate.rptdesign","d:\\rhinocortRate_mobile.html","html","","");  
         html.stopPlatform();
         System.out.println("Finished");  
     }

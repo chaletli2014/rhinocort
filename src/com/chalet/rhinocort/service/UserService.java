@@ -27,4 +27,6 @@ public interface UserService {
 	
 	public void deleteBMUsers() throws Exception;
 	public void insertBMUsers(List<UserInfo> userInfos) throws Exception;   
+	
+	public List<String> getAllRSMRegion() throws Exception;
 }

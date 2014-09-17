@@ -142,9 +142,12 @@ public class UserDAOImpl implements UserDAO {
         });
     }
     
-    
     @Override
     public void deleteBMUsers() throws Exception {
         dataBean.getJdbcTemplate().update("delete from tbl_userinfo where level not in('RSD','RSM','DSM','REP')");
+    }
+    
+    public List<String> getAllRSMRegion() throws Exception {
+        return dataBean.getJdbcTemplate().queryForList("select distinct region from tbl_userinfo where region is not null order by region ", String.class);
     }
 }

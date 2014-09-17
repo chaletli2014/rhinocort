@@ -67,10 +67,12 @@ public class ReportThread extends Thread {
                         ReportUtils.refreshWeeklyPDFReport(basePath, contextPath, beginDate);
                         this.taskTime = System.currentTimeMillis();
                         
-                        createHTMLWeeklyReport(html, "RSM", basePath, contextPath, beginDateStr);
+                        createHTMLWeeklyReport(html, "RSM", basePath, contextPath, beginDateStr, null);
                         this.taskTime = System.currentTimeMillis();
                         
-                        createHTMLWeeklyReport(html, "DSM", basePath, contextPath, beginDateStr);
+                        List<String> rsmRegion = userService.getAllRSMRegion();
+                        
+                        createHTMLWeeklyReport(html, "DSM", basePath, contextPath, beginDateStr, rsmRegion);
                         this.taskTime = System.currentTimeMillis();
                         
                         html.stopPlatform();
@@ -91,18 +93,27 @@ public class ReportThread extends Thread {
         }
     }
     
-    private void createHTMLWeeklyReport(BirtReportUtils html, String userLevel, String basePath, String contextPath, String beginDate){
+    private void createHTMLWeeklyReport(BirtReportUtils html, String userLevel, String basePath, String contextPath, String beginDate, List<String> allRSM){
         String weeklyReportFileName = basePath + "report/"+beginDate+"/weeklyReport-"+userLevel+".html";
         switch(userLevel){
             case LsAttributes.USER_LEVEL_RSM:
                 if( !new File(weeklyReportFileName).exists() ){
-                    html.runReport( basePath + "reportDesigns/rhinocortRate_mobile.rptdesign",weeklyReportFileName,"html",basePath+"/reportImages",contextPath+"/reportImages");
+                    html.runReport( basePath + "reportDesigns/rhinocortRate_mobile.rptdesign",weeklyReportFileName,"html",basePath+"/reportImages",contextPath+"/reportImages", "");
                     logger.info("the weekly html report to RSM is done.");
                 }else{
                     logger.info("The weekly html report for RSM is already generated, no need to do again.");
                 }
                 break;
             case LsAttributes.USER_LEVEL_DSM:
+            	for( String rsmRegion : allRSM ){
+            		String weeklyReportFileName_DSM = basePath + "report/"+beginDate+"/weeklyReport-"+rsmRegion+".html";
+            		if( !new File(weeklyReportFileName).exists() ){
+                        html.runReport( basePath + "reportDesigns/rhinocortRate_mobile_DSM.rptdesign",weeklyReportFileName_DSM,"html",basePath+"/reportImages",contextPath+"/reportImages",rsmRegion);
+                        logger.info(String.format("the weekly html report to DSM of %s is done.",rsmRegion));
+                    }else{
+                        logger.info(String.format("The weekly html report for DSM of %s is already generated, no need to do again.",rsmRegion));
+                    }
+            	}
                 break;
             default:
                 logger.info(String.format("the level of the user is %s, no need to generate the report", userLevel));
