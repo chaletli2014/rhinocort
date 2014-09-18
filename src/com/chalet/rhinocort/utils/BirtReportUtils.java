@@ -197,7 +197,8 @@ public class BirtReportUtils {
     	try{
     		config = new EngineConfig( );  
     		config.setBIRTHome("");//
-    		config.setLogConfig(CustomizedProperty.getContextProperty("birt_log_path", "d:/chalet/birt/logs"), Level.FINE);
+    		config.setLogConfig("d:/chalet/birt/logs", Level.FINE);
+//    		config.setLogConfig(CustomizedProperty.getContextProperty("birt_log_path", "d:/chalet/birt/logs"), Level.FINE);
     		HTMLEmitterConfig emitterConfig = new HTMLEmitterConfig( ); 
     		emitterConfig.setActionHandler( new HTMLActionHandler( ) ); 
     		HTMLServerImageHandler imageHandler = new HTMLServerImageHandler( ); 
@@ -252,6 +253,7 @@ public class BirtReportUtils {
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate3.rptdesign","","","d:\\rhinocortRate3.pdf","pdf","","","");  
 //        html.runRefreshReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\rhinocortRate4.rptdesign","","","d:\\rhinocortRate4.pdf","pdf","","","");  
 //        html.runReport("D:\\workspace\\Rhinocort\\WebContent\\reportDesigns\\mobile_rhinocortRate.rptdesign","d:\\rhinocortRate_mobile.html","html","","");  
+        html.runReport( "D:\\workspace_birt\\rhinocort\\WebContent\\reportDesigns\\rhinocortRate_mobile_test.rptdesign","d:\\test\\rhinocortRate_mobile.html","html","d:\\test\\","d:\\test\\", "");  
         html.stopPlatform();
         System.out.println("Finished");  
     }
