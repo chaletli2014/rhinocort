@@ -22,14 +22,6 @@
             <div class="department_img_div">
 	            <img alt="" src="<%=basePath%>images/img_bg_share.png" onclick="showCustomrizedMessage('功能正在建设中')" style="cursor: pointer;">
         	</div>
-        	<%
-        		String currentTel = (String)request.getSession(true).getAttribute(com.chalet.rhinocort.utils.RhinocortAttributes.CURRENT_OPERATOR);
-        		if( null != currentTel && "18501622299".equalsIgnoreCase(currentTel)){
-        	%>
-        	<div class="department_img_div">
-	            <a href="<%=basePath%>jsp/example.html" onclick="javascript:void(0)" data-ajax="false">气泡图效果展示</a>
-        	</div>
-        	<%} %>
         </div>
         <jsp:include page="page_footer.jsp" flush="true">
             <jsp:param value="<%=basePath%>" name="basePath"/>
