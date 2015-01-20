@@ -88,6 +88,32 @@ public class RhinocortWeeklyExportData {
 	 */
 	private double cnjsRate;
 	
+	private double xcNum1PerDay;
+	private double xcNum2PerDay;
+	private double xcNum3PerDay;
+	private double xcNum4PerDay;
+	private double xcNum5PerDay;
+	
+	/**
+	 * 哮喘合并过敏鼻炎比例
+	 */
+	private double xcRate1;
+	
+	/**
+	 * 哮喘合并过敏鼻炎中鼻喷激素处方比例
+	 */
+	private double xcRate2;
+	
+	/**
+	 * 鼻喷激素中雷诺考特处方比例
+	 */
+	private double xcRate3;
+	
+	/**
+	 * 哮喘合并过敏鼻炎中孟鲁司特类药物处方比例
+	 */
+	private double xcRate4;
+	
 	private String saleName;
 	private String dsmName;
 	private String region;
@@ -341,5 +367,76 @@ public class RhinocortWeeklyExportData {
 	}
 	public void setCnjsRate(double cnjsRate) {
 		this.cnjsRate = cnjsRate;
+	}
+	
+	public double getXcRate1() {
+		if( xcNum1PerDay == 0 ){
+			return 0;
+		}
+		return xcNum2PerDay/xcNum1PerDay;
+	}
+	public void setXcRate1(double xcRate1) {
+		this.xcRate1 = xcRate1;
+	}
+	
+	public double getXcRate2() {
+		if( xcNum2PerDay == 0 ){
+			return 0;
+		}
+		return xcNum3PerDay/xcNum2PerDay;
+	}
+	public void setXcRate2(double xcRate2) {
+		this.xcRate2 = xcRate2;
+	}
+	
+	public double getXcRate3() {
+		if( xcNum3PerDay == 0 ){
+			return 0;
+		}
+		return xcNum4PerDay/xcNum3PerDay;
+	}
+	public void setXcRate3(double xcRate3) {
+		this.xcRate3 = xcRate3;
+	}
+	
+	public double getXcRate4() {
+		if( xcNum2PerDay == 0 ){
+			return 0;
+		}
+		return xcNum5PerDay/xcNum2PerDay;
+	}
+	public void setXcRate4(double xcRate4) {
+		this.xcRate4 = xcRate4;
+	}
+	
+	public double getXcNum1PerDay() {
+		return xcNum1PerDay;
+	}
+	public void setXcNum1PerDay(double xcNum1PerDay) {
+		this.xcNum1PerDay = xcNum1PerDay;
+	}
+	public double getXcNum2PerDay() {
+		return xcNum2PerDay;
+	}
+	public void setXcNum2PerDay(double xcNum2PerDay) {
+		this.xcNum2PerDay = xcNum2PerDay;
+	}
+	public double getXcNum3PerDay() {
+		return xcNum3PerDay;
+	}
+	public void setXcNum3PerDay(double xcNum3PerDay) {
+		this.xcNum3PerDay = xcNum3PerDay;
+	}
+	public double getXcNum4PerDay() {
+		return xcNum4PerDay;
+	}
+	public void setXcNum4PerDay(double xcNum4PerDay) {
+		this.xcNum4PerDay = xcNum4PerDay;
+	}
+	public double getXcNum5PerDay() {
+		return xcNum5PerDay;
+	}
+	public void setXcNum5PerDay(double xcNum5PerDay) {
+		this.xcNum5PerDay = xcNum5PerDay;
 	}
 }

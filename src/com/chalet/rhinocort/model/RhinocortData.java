@@ -41,6 +41,31 @@ public class RhinocortData {
 	 * 常年鼻炎患者中使用鼻用激素的人数.
 	 */
 	private int num7;
+	
+	/**
+	 * 哮喘患者数
+	 */
+	private int num8;
+	
+	/**
+	 * 哮喘合并过敏鼻炎患者数
+	 */
+	private int num9;
+	
+	/**
+	 * 哮喘合并过敏鼻炎使用鼻喷激素患者数
+	 */
+	private int num10;
+	
+	/**
+	 * 哮喘合并过敏鼻炎使用雷诺考特患者数
+	 */
+	private int num11;
+	
+	/**
+	 * 哮喘合并过敏鼻炎使用孟鲁司特类药物患者数
+	 */
+	private int num12;
     private Date createdate;
     private Date updatedate;
     private String dsmName;
@@ -130,5 +155,35 @@ public class RhinocortData {
 	}
 	public void setNum7(int num7) {
 		this.num7 = num7;
+	}
+	public int getNum8() {
+		return num8;
+	}
+	public void setNum8(int num8) {
+		this.num8 = num8;
+	}
+	public int getNum9() {
+		return num9;
+	}
+	public void setNum9(int num9) {
+		this.num9 = num9;
+	}
+	public int getNum10() {
+		return num10;
+	}
+	public void setNum10(int num10) {
+		this.num10 = num10;
+	}
+	public int getNum11() {
+		return num11;
+	}
+	public void setNum11(int num11) {
+		this.num11 = num11;
+	}
+	public int getNum12() {
+		return num12;
+	}
+	public void setNum12(int num12) {
+		this.num12 = num12;
 	}
 }

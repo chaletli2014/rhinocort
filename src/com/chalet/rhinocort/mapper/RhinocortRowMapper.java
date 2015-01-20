@@ -28,6 +28,11 @@ public class RhinocortRowMapper implements RowMapper<RhinocortData>{
     	rhinocortData.setNum5(rs.getInt("num5"));
     	rhinocortData.setNum6(rs.getInt("num6"));
     	rhinocortData.setNum7(rs.getInt("num7"));
+    	rhinocortData.setNum8(rs.getInt("num8"));
+    	rhinocortData.setNum9(rs.getInt("num9"));
+    	rhinocortData.setNum10(rs.getInt("num10"));
+    	rhinocortData.setNum11(rs.getInt("num11"));
+    	rhinocortData.setNum12(rs.getInt("num12"));
     	rhinocortData.setDsmName(rs.getString("dsmName"));
         return rhinocortData;
 	}

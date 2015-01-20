@@ -97,8 +97,13 @@ public class DownloadController {
                     row.createCell(8, XSSFCell.CELL_TYPE_STRING).setCellValue("常年性鼻炎病人数");
                     row.createCell(9, XSSFCell.CELL_TYPE_STRING).setCellValue("处方雷诺考特的常年性鼻炎病人数");
                     row.createCell(10, XSSFCell.CELL_TYPE_STRING).setCellValue("常年鼻炎患者中使用鼻用激素的人数");
-                    row.createCell(11, XSSFCell.CELL_TYPE_STRING).setCellValue("销售代表姓名");
-                    row.createCell(12, XSSFCell.CELL_TYPE_STRING).setCellValue("所属DSM");
+                    row.createCell(11, XSSFCell.CELL_TYPE_STRING).setCellValue("哮喘患者数");
+                    row.createCell(12, XSSFCell.CELL_TYPE_STRING).setCellValue("哮喘合并过敏鼻炎患者数");
+                    row.createCell(13, XSSFCell.CELL_TYPE_STRING).setCellValue("哮喘合并过敏鼻炎使用鼻喷激素患者数");
+                    row.createCell(14, XSSFCell.CELL_TYPE_STRING).setCellValue("哮喘合并过敏鼻炎使用雷诺考特患者数");
+                    row.createCell(15, XSSFCell.CELL_TYPE_STRING).setCellValue("哮喘合并过敏鼻炎使用孟鲁司特类药物患者数");
+                    row.createCell(16, XSSFCell.CELL_TYPE_STRING).setCellValue("销售代表姓名");
+                    row.createCell(17, XSSFCell.CELL_TYPE_STRING).setCellValue("所属DSM");
                     
                     HSSFCellStyle numberCellStyle = workbook.createCellStyle();
                     numberCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0"));
@@ -138,8 +143,28 @@ public class DownloadController {
                 		num7Cell.setCellValue(data.getNum7());
                 		num7Cell.setCellStyle(numberCellStyle);
                 		
-                        row.createCell(11, XSSFCell.CELL_TYPE_STRING).setCellValue(data.getSalesName());
-                        row.createCell(12, XSSFCell.CELL_TYPE_STRING).setCellValue(data.getDsmName());
+                		HSSFCell num8Cell = row.createCell(11, XSSFCell.CELL_TYPE_NUMERIC);
+                		num8Cell.setCellValue(data.getNum8());
+                		num8Cell.setCellStyle(numberCellStyle);
+                		
+                		HSSFCell num9Cell = row.createCell(12, XSSFCell.CELL_TYPE_NUMERIC);
+                		num9Cell.setCellValue(data.getNum9());
+                		num9Cell.setCellStyle(numberCellStyle);
+                		
+                		HSSFCell num10Cell = row.createCell(13, XSSFCell.CELL_TYPE_NUMERIC);
+                		num10Cell.setCellValue(data.getNum10());
+                		num10Cell.setCellStyle(numberCellStyle);
+                		
+                		HSSFCell num11Cell = row.createCell(14, XSSFCell.CELL_TYPE_NUMERIC);
+                		num11Cell.setCellValue(data.getNum11());
+                		num11Cell.setCellStyle(numberCellStyle);
+                		
+                		HSSFCell num12Cell = row.createCell(15, XSSFCell.CELL_TYPE_NUMERIC);
+                		num12Cell.setCellValue(data.getNum12());
+                		num12Cell.setCellStyle(numberCellStyle);
+                		
+                        row.createCell(16, XSSFCell.CELL_TYPE_STRING).setCellValue(data.getSalesName());
+                        row.createCell(17, XSSFCell.CELL_TYPE_STRING).setCellValue(data.getDsmName());
                     }
                     workbook.write(fOut);
             }
@@ -331,10 +356,17 @@ public class DownloadController {
         sheet.addMergedRegion(new Region(1, (short)13, 1, (short)17));
         row.getCell(13).setCellStyle(topStyle);
         
-        row.createCell(18, XSSFCell.CELL_TYPE_STRING).setCellValue("销售同事情况");
+        row.createCell(18, XSSFCell.CELL_TYPE_STRING).setCellValue("哮喘合并过敏鼻炎情况");
         row.createCell(19, XSSFCell.CELL_TYPE_STRING).setCellValue("");
-        sheet.addMergedRegion(new Region(1, (short)18, 1, (short)19));
+        row.createCell(20, XSSFCell.CELL_TYPE_STRING).setCellValue("");
+        row.createCell(21, XSSFCell.CELL_TYPE_STRING).setCellValue("");
+        sheet.addMergedRegion(new Region(1, (short)18, 1, (short)21));
         row.getCell(18).setCellStyle(topStyle);
+        
+        row.createCell(22, XSSFCell.CELL_TYPE_STRING).setCellValue("销售同事情况");
+        row.createCell(23, XSSFCell.CELL_TYPE_STRING).setCellValue("");
+        sheet.addMergedRegion(new Region(1, (short)22, 1, (short)23));
+        row.getCell(22).setCellStyle(topStyle);
         
         row = sheet.createRow(currentRowNum++);
         HSSFCell headerBRNameCell = row.createCell(0, XSSFCell.CELL_TYPE_STRING);
@@ -409,11 +441,27 @@ public class DownloadController {
         headerRate5Cell.setCellValue("雷诺考特处方比例");
         headerRate5Cell.setCellStyle(top2Style);
         
-        HSSFCell headerSalesCell = row.createCell(18, XSSFCell.CELL_TYPE_STRING);
+        HSSFCell headerRate6Cell = row.createCell(18, XSSFCell.CELL_TYPE_STRING);
+        headerRate6Cell.setCellValue("哮喘合并过敏鼻炎比例");
+        headerRate6Cell.setCellStyle(top2Style);
+        
+        HSSFCell headerRate7Cell = row.createCell(19, XSSFCell.CELL_TYPE_STRING);
+        headerRate7Cell.setCellValue("哮喘合并过敏鼻炎中鼻喷激素处方比例");
+        headerRate7Cell.setCellStyle(top2Style);
+        
+        HSSFCell headerRate8Cell = row.createCell(20, XSSFCell.CELL_TYPE_STRING);
+        headerRate8Cell.setCellValue("鼻喷激素中雷诺考特处方比例");
+        headerRate8Cell.setCellStyle(top2Style);
+        
+        HSSFCell headerRate9Cell = row.createCell(21, XSSFCell.CELL_TYPE_STRING);
+        headerRate9Cell.setCellValue("哮喘合并过敏鼻炎中孟鲁司特类药物处方比例");
+        headerRate9Cell.setCellStyle(top2Style);
+        
+        HSSFCell headerSalesCell = row.createCell(22, XSSFCell.CELL_TYPE_STRING);
         headerSalesCell.setCellValue("销售代表姓名");
         headerSalesCell.setCellStyle(top2Style);
         
-        HSSFCell headerDSMNameCell = row.createCell(19, XSSFCell.CELL_TYPE_STRING);
+        HSSFCell headerDSMNameCell = row.createCell(23, XSSFCell.CELL_TYPE_STRING);
         headerDSMNameCell.setCellValue("所属DSM");
         headerDSMNameCell.setCellStyle(top2Style);
         
@@ -440,8 +488,12 @@ public class DownloadController {
         sheet.setColumnWidth(15, dataColumnWidth*256);
         sheet.setColumnWidth(16, dataColumnWidth*256);
         sheet.setColumnWidth(17, dataColumnWidth*256);
-        sheet.setColumnWidth(18, salesColumnWidth*256);
-        sheet.setColumnWidth(19, salesColumnWidth*256);
+        sheet.setColumnWidth(18, dataColumnWidth*256);
+        sheet.setColumnWidth(19, dataColumnWidth*256);
+        sheet.setColumnWidth(20, dataColumnWidth*256);
+        sheet.setColumnWidth(21, dataColumnWidth*256);
+        sheet.setColumnWidth(22, salesColumnWidth*256);
+        sheet.setColumnWidth(23, salesColumnWidth*256);
         
         HSSFCellStyle numberCellStyle = workbook.createCellStyle();
         numberCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0"));
@@ -536,11 +588,31 @@ public class DownloadController {
 			rhinocortRateCell.setCellValue(data.getRhinocortRate());
 			rhinocortRateCell.setCellStyle(percentBorderStyle);
 			
-			HSSFCell salesNameCell = row.createCell(18, XSSFCell.CELL_TYPE_STRING);
+			/** 哮喘合并过敏鼻炎比例  */
+			HSSFCell xcRate1Cell = row.createCell(18, XSSFCell.CELL_TYPE_NUMERIC);
+			xcRate1Cell.setCellValue(data.getXcRate1());
+			xcRate1Cell.setCellStyle(percentCellStyle);
+			
+			/** 哮喘合并过敏鼻炎中鼻喷激素处方比例 */
+			HSSFCell xcRate2Cell = row.createCell(19, XSSFCell.CELL_TYPE_NUMERIC);
+			xcRate2Cell.setCellValue(data.getXcRate2());
+			xcRate2Cell.setCellStyle(percentCellStyle);
+			
+			/** 鼻喷激素中雷诺考特处方比例  */
+			HSSFCell xcRate3Cell = row.createCell(20, XSSFCell.CELL_TYPE_NUMERIC);
+			xcRate3Cell.setCellValue(data.getXcRate3());
+			xcRate3Cell.setCellStyle(percentCellStyle);
+
+			/** 哮喘合并过敏鼻炎中孟鲁司特类药物处方比例  */
+			HSSFCell xcRate4Cell = row.createCell(21, XSSFCell.CELL_TYPE_NUMERIC);
+			xcRate4Cell.setCellValue(data.getXcRate4());
+			xcRate4Cell.setCellStyle(percentBorderStyle);
+			
+			HSSFCell salesNameCell = row.createCell(22, XSSFCell.CELL_TYPE_STRING);
 			salesNameCell.setCellValue(data.getSaleName());
 			salesNameCell.setCellStyle(valueNameStyle);
 			
-			HSSFCell dsmNameCell = row.createCell(19, XSSFCell.CELL_TYPE_STRING);
+			HSSFCell dsmNameCell = row.createCell(23, XSSFCell.CELL_TYPE_STRING);
 			dsmNameCell.setCellValue(data.getDsmName());
 			dsmNameCell.setCellStyle(valueNameBorderStyle);
 		}

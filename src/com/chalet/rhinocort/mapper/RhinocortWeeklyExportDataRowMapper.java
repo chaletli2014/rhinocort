@@ -30,6 +30,11 @@ public class RhinocortWeeklyExportDataRowMapper implements RowMapper<RhinocortWe
 		rhinocortData.setDsmName(rs.getString("dsmName"));
 		rhinocortData.setRegion(rs.getString("region"));
 		rhinocortData.setRegionCenter(rs.getString("regionCenter"));
+		rhinocortData.setXcNum1PerDay(rs.getDouble("xcNum1PerDay"));
+		rhinocortData.setXcNum2PerDay(rs.getDouble("xcNum2PerDay"));
+		rhinocortData.setXcNum3PerDay(rs.getDouble("xcNum3PerDay"));
+		rhinocortData.setXcNum4PerDay(rs.getDouble("xcNum4PerDay"));
+		rhinocortData.setXcNum5PerDay(rs.getDouble("xcNum5PerDay"));
         return rhinocortData;
 	}
 

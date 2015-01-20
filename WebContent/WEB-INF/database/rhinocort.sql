@@ -79,3 +79,10 @@ insert into tbl_userinfo values(null,'吴晓岚',null,'13788905258',null,null,nu
 
 alter table tbl_rhinocort_data add num6 int;
 alter table tbl_rhinocort_data add num7 int;
+
+--2015-01-20
+alter table tbl_rhinocort_data add num8 int default 0;
+alter table tbl_rhinocort_data add num9 int default 0;
+alter table tbl_rhinocort_data add num10 int default 0;
+alter table tbl_rhinocort_data add num11 int default 0;
+alter table tbl_rhinocort_data add num12 int default 0;

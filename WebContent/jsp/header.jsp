@@ -26,7 +26,7 @@
 	
 	<link rel="stylesheet" href="<%=basePath%>css/ls-theme.min.css" type="text/css"/>
 	<link rel="stylesheet" href="<%=basePath%>css/rhinocort.css" type="text/css"/>
-	<script type="text/javascript" src="<%=basePath%>js/rhinocort.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/rhinocort.js?version=1"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 	    var today = new Date();

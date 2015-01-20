@@ -28,6 +28,23 @@ function checkForm(){
 	if( !isInteger($("#num1"),$("#num2"),$("#num3"),$("#num4"),$("#num5"))  ){
         return false;
 	}
+	
+	if( !obj1ltobj2("num8","num9") ){
+		return false;
+	}
+	
+	if( !obj1ltobj2("num9","num10") ){
+		return false;
+	}
+	
+	if( !obj1ltobj2("num10","num11") ){
+		return false;
+	}
+	
+	if( !obj1ltobj2("num9","num12") ){
+		return false;
+	}
+	
     return true;
 }
 </script>
@@ -79,6 +96,26 @@ function checkForm(){
                 <div data-role="fieldcontain"  class="formCollection">
                     <label for="num7" id="num7_label">常年鼻炎患者中使用鼻用激素的人数</label>
                     <input type="number" name="num7" id="num7" value="${existedData.num7==null?0:existedData.num7}"/>
+                </div>
+                <div data-role="fieldcontain"  class="formCollection">
+                    <label for="num8" id="num8_label">哮喘患者数</label>
+                    <input type="number" name="num8" id="num8" value="${existedData.num8==null?0:existedData.num8}"/>
+                </div>
+                <div data-role="fieldcontain"  class="formCollection">
+                    <label for="num9" id="num9_label">哮喘合并过敏鼻炎患者数</label>
+                    <input type="number" name="num9" id="num9" value="${existedData.num9==null?0:existedData.num9}"/>
+                </div>
+                <div data-role="fieldcontain"  class="formCollection">
+                    <label for="num10" id="num10_label">哮喘合并过敏鼻炎使用鼻喷激素患者数</label>
+                    <input type="number" name="num10" id="num10" value="${existedData.num10==null?0:existedData.num10}"/>
+                </div>
+                <div data-role="fieldcontain"  class="formCollection">
+                    <label for="num11" id="num11_label">哮喘合并过敏鼻炎使用雷诺考特患者数</label>
+                    <input type="number" name="num11" id="num11" value="${existedData.num11==null?0:existedData.num11}"/>
+                </div>
+                <div data-role="fieldcontain"  class="formCollection">
+                    <label for="num12" id="num12_label">哮喘合并过敏鼻炎使用孟鲁司特类药物患者数</label>
+                    <input type="number" name="num12" id="num12" value="${existedData.num12==null?0:existedData.num12}"/>
                 </div>
                 <div style="text-align: center;">
 		            <a class="submit_btn" href="javascript:void(0)" onclick="submitForm()">

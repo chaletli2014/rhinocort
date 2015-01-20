@@ -271,6 +271,11 @@ public class IndexController extends BaseController{
         int num5 = StringUtils.getIntegerFromString(request.getParameter("num5"));
         int num6 = StringUtils.getIntegerFromString(request.getParameter("num6"));
         int num7 = StringUtils.getIntegerFromString(request.getParameter("num7"));
+        int num8 = StringUtils.getIntegerFromString(request.getParameter("num8"));
+        int num9 = StringUtils.getIntegerFromString(request.getParameter("num9"));
+        int num10 = StringUtils.getIntegerFromString(request.getParameter("num10"));
+        int num11 = StringUtils.getIntegerFromString(request.getParameter("num11"));
+        int num12 = StringUtils.getIntegerFromString(request.getParameter("num12"));
         
         rhinocortData.setHospitalCode(hospitalCode);
         rhinocortData.setNum1(num1);
@@ -280,5 +285,10 @@ public class IndexController extends BaseController{
         rhinocortData.setNum5(num5);
         rhinocortData.setNum6(num6);
         rhinocortData.setNum7(num7);
+        rhinocortData.setNum8(num8);
+        rhinocortData.setNum9(num9);
+        rhinocortData.setNum10(num10);
+        rhinocortData.setNum11(num11);
+        rhinocortData.setNum12(num12);
     }
 }

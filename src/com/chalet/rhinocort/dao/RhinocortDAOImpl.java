@@ -84,7 +84,7 @@ public class RhinocortDAOImpl implements RhinocortDAO {
 	public void insert(final RhinocortData rhinocortData, final UserInfo operator, final Hospital hospital) throws Exception {
 		logger.info(">>RhinocortDAOImpl insert");
 		
-		final String sql = "insert into tbl_rhinocort_data values(null,?,?,?,?,?,?,?,?,NOW(),NOW(),?,?)";
+		final String sql = "insert into tbl_rhinocort_data values(null,?,?,?,?,?,?,?,?,NOW(),NOW(),?,?,?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		dataBean.getJdbcTemplate().update(new PreparedStatementCreator(){
 			@Override
@@ -101,6 +101,11 @@ public class RhinocortDAOImpl implements RhinocortDAO {
 				ps.setString(8, (operator.getSuperior()==null||"".equalsIgnoreCase(operator.getSuperior()))?operator.getUserCode():operator.getSuperior());
 				ps.setInt(9, rhinocortData.getNum6());
 				ps.setInt(10, rhinocortData.getNum7());
+				ps.setInt(11, rhinocortData.getNum8());
+				ps.setInt(12, rhinocortData.getNum9());
+				ps.setInt(13, rhinocortData.getNum10());
+				ps.setInt(14, rhinocortData.getNum11());
+				ps.setInt(15, rhinocortData.getNum12());
 				return ps;
 			}
 		}, keyHolder);
@@ -118,6 +123,11 @@ public class RhinocortDAOImpl implements RhinocortDAO {
 	    	.append(", num5=? ")
 	    	.append(", num6=? ")
 	    	.append(", num7=? ")
+	    	.append(", num8=? ")
+	    	.append(", num9=? ")
+	    	.append(", num10=? ")
+	    	.append(", num11=? ")
+	    	.append(", num12=? ")
 	    	.append(", operatorName=? ")
 	    	.append(" where id=? ");
 	    
@@ -129,6 +139,11 @@ public class RhinocortDAOImpl implements RhinocortDAO {
 	    paramList.add(rhinocortData.getNum5());
 	    paramList.add(rhinocortData.getNum6());
 	    paramList.add(rhinocortData.getNum7());
+	    paramList.add(rhinocortData.getNum8());
+	    paramList.add(rhinocortData.getNum9());
+	    paramList.add(rhinocortData.getNum10());
+	    paramList.add(rhinocortData.getNum11());
+	    paramList.add(rhinocortData.getNum12());
     	paramList.add(operator.getName());
     	paramList.add(rhinocortData.getDataId());
 		dataBean.getJdbcTemplate().update(sql.toString(), paramList.toArray());
@@ -261,6 +276,11 @@ public class RhinocortDAOImpl implements RhinocortDAO {
 		.append(" ROUND(IFNULL(rd.num5,0),2) as rhiPRhinitisNumPerDay, ")
 		.append(" ROUND(IFNULL(rd.num6,0),2) as gmjsNumPerDay, ")
 		.append(" ROUND(IFNULL(rd.num7,0),2) as cnjsNumPerDay, ")
+		.append(" ROUND(IFNULL(rd.num8,0),2) as xcNum1PerDay, ")
+		.append(" ROUND(IFNULL(rd.num9,0),2) as xcNum2PerDay, ")
+		.append(" ROUND(IFNULL(rd.num10,0),2) as xcNum3PerDay, ")
+		.append(" ROUND(IFNULL(rd.num11,0),2) as xcNum4PerDay, ")
+		.append(" ROUND(IFNULL(rd.num12,0),2) as xcNum5PerDay, ")
 		.append(" u.name as saleName, ")
 		.append(" h.dsmName as dsmName, ")
 		.append(" h.region as region, ")
@@ -285,7 +305,12 @@ public class RhinocortDAOImpl implements RhinocortDAO {
 		.append(" h.name as hospitalName,  ")
 		.append(" h.dsmName as dsmName , ")
 		.append(" u.name as saleName, ")
-		.append(" 0 as entNumPerDay, 0 as arNumPerDay, 0 as rhiARNumPerDay, 0 as prhinitisNumPerDay, 0 as rhiPRhinitisNumPerDay, 0 as gmjsNumPerDay, 0 as cnjsNumPerDay ")
+		.append(" 0 as entNumPerDay, 0 as arNumPerDay, 0 as rhiARNumPerDay, 0 as prhinitisNumPerDay, 0 as rhiPRhinitisNumPerDay, 0 as gmjsNumPerDay, 0 as cnjsNumPerDay, ")
+		.append(" 0 as xcNum1PerDay, ")
+		.append(" 0 as xcNum2PerDay, ")
+		.append(" 0 as xcNum3PerDay, ")
+		.append(" 0 as xcNum4PerDay, ")
+		.append(" 0 as xcNum5PerDay ")
 		.append(" from tbl_hospital h, tbl_userinfo u, tbl_hos_user hu ")
 		.append(" where h.code not in ( ")
 		.append(" 	select distinct rd.hospitalCode ")
